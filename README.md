@@ -78,12 +78,24 @@ The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, 
   <img src="figures/FI_catboost.png" alt="Feature Importance (CatBoost)">
 </figure> 
 
- ## Results
- | Model | Kaggle Public LB ROC AUC |
+### XGBoost OptunaTuned Model
+To diversify the learning approach, an XGBoost model was introduced. Optimized with Optuna and trained using GPU acceleration, the model achieved a solid score of 0.94085 on the public leaderboard.
+
+### Ensembling & Rank Blending
+Since LightGBM, CatBoost, and XGBoost build trees and process categorical features differently, ensembling is a standard Kaggle technique to maximize the ROC AUC score. 
+* **Probability Blending:** An initial attempt at a simple 50/50 average of LightGBM and CatBoost probabilities decreased the overall score.
+* **Rank Blending:** To bypass the probability scaling issue, raw probabilities were converted into normalized ranks. A 3-Way Rank Blend was executed, heavily weighting the stronger models (50% CatBoost, 25% XGBoost, 25% LightGBM). This ensemble achieved 0.94541 on the leaderboard.
+* **Conclusion:** The 3-Way Rank Blend ultimately underperformed compared to the CatBoost model. This indicates that CatBoost's native categorical encoding  is vastly superior for this specific dataset.
+
+## Results
+| Model | Kaggle Public LB ROC AUC |
 | :--- | :--- |
 | **LightGBM (Baseline)** | 0.91827 |
 | **LightGBM (Tuned - Optuna)** | 0.93026 |
+| **XGBoost (Tuned - Optuna)** | 0.94085 |
+| **3-Way Rank Blend** | 0.94541 |
 | **CatBoost (Tuned - Optuna)** | **0.94817** |
+
 
 
 ## Repo Structrue
@@ -93,6 +105,7 @@ Predicting_F1_Pit_Stops
  ┣ Analysis_Feature_Eng.ipynb       # Datasets preparing and analysis
  ┣ Baseline_model.ipynb
  ┣ Cat_Boost.ipynb
+ ┣ XGBoost.ipynb
  ┣ Light_GBM.ipynb
  ┗  README.md
 ```
