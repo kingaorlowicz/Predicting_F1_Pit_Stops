@@ -58,12 +58,29 @@ An initial exploratory data analysis revealed key strategic and technical patter
 The first baseline model utilized a LightGBM Classifier (default hyperparameters). 
 The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, averaging Out-Of-Fold (OOF) probabilities. Feature importance evaluated via "Gain" confirmed the effectiveness of our engineered features, highlighting the dominant role of the year, stint number, and `Cliff_Indicator`. The baseline model achieved an OOF ROC AUC of ~0.915 and a public leaderboard score of ~0.918.
 
+ Features importance:
+
+<figure align="center">
+  <img src="figures/FI_baseline.png" alt="Feature Importance (Baseline Model)">
+</figure> 
+
+
 ## LightGBM OptunaTuned Model
  The search space targeted tree complexity, learning rate, and L1/L2 regularization. The optimization favored robust, wide trees (`num_leaves: 150`, `max_depth: 9`) combined with a slow learning rate (`learning_rate: ~0.012`) and strict row/column subsampling to prevent overfitting. The optimized model achieved an improved score of 0.93026 on the public leaderboard.
+
+ ## CatBoost OptunaTuned Model
+ As in LightGBM I used Optuna to optimize hyperparameters od Catboost. The model achived even better result on kaggle public leaderboard: 0.94817.
+
+  Features importance:
+
+ <figure align="center">
+  <img src="figures/FI_catboost.png" alt="Feature Importance (CatBoost)">
+</figure> 
 
  ## Results
  | Model | Kaggle Public LB ROC AUC |
 | :--- | :--- |
 | **LightGBM (Baseline)** | 0.91827 |
-| **LightGBM (Tuned - Optuna)** | **0.93026** |
+| **LightGBM (Tuned - Optuna)** | 0.93026 |
+| **CatBoost (Tuned - Optuna)** | **0.94817** |
 
