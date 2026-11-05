@@ -31,9 +31,28 @@ To extract hidden strategic dependencies, a comprehensive set of relative featur
 ## Exploratory Data Analysis (EDA)
 An initial exploratory data analysis revealed key strategic and technical patterns driving pit stop decisions:
 * **Class Imbalance:** Pit stops represent a small fraction of all lap records, which required setting class weights (`scale_pos_weight`) during model training.
+
+<figure align="center">
+  <img src="figures/target_distribution.png" alt="Target Distribution">
+</figure>
+
 * **Pit Windows:** The target distribution relative to `RaceProgress` and `Compound` highlights clear lap intervals where specific tire compounds reach their physical limits.
+
+<figure align="center">
+  <img src="figures/target_vs_tyrelife_compound.png" alt="Target vs TyreLife and Compound">
+</figure>
+
 * **The "In-lap Push" Phenomenon:** An analysis of lap time deltas (`LapTime_Delta`) uncovered an unexpected acceleration right before a pit stop (negative values). Drivers, freed from tire preservation, maximize energy deployment (ERS) on their in-lap.
+
+<figure align="center">
+  <img src="figures/target_vs_timedelta.png" alt="Target vs TimeDelta">
+</figure>
+
 * **Collinearity:** Pearson correlation matrices helped identify highly collinear features, guiding the removal of redundant noise.
+
+<figure align="center">
+  <img src="figures/corr_matrix.png" alt="Correlation Matrix">
+</figure>
 
 ## Modeling: Baseline (LightGBM)
 The first baseline model utilized a LightGBM Classifier (default hyperparameters). 
