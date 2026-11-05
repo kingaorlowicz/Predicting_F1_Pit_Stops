@@ -66,10 +66,10 @@ The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, 
 
 
 ## LightGBM OptunaTuned Model
- The search space targeted tree complexity, learning rate, and L1/L2 regularization. The optimization favored robust, wide trees (`num_leaves: 150`, `max_depth: 9`) combined with a slow learning rate (`learning_rate: ~0.012`) and strict row/column subsampling to prevent overfitting. The optimized model achieved an improved score of 0.93026 on the public leaderboard.
+ I used Optuna to tune LightGBM model. The optimized model achieved an improved score of 0.93026 on the public leaderboard.
 
  ## CatBoost OptunaTuned Model
- As in LightGBM I used Optuna to optimize hyperparameters od Catboost. The model achived even better result on kaggle public leaderboard: 0.94817.
+ As in LightGBM I used Optuna to optimize hyperparameters od Catboost. I used Google Colab GPU to train Catboost models. The model achived even better result on kaggle public leaderboard: 0.94817.
 
   Features importance:
 
@@ -84,3 +84,14 @@ The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, 
 | **LightGBM (Tuned - Optuna)** | 0.93026 |
 | **CatBoost (Tuned - Optuna)** | **0.94817** |
 
+
+## Repo Structrue
+```
+Predicting_F1_Pit_Stops
+ ┣ /figures                       
+ ┣ Analysis_Feature_Eng.ipynb       # Datasets preparing and analysis
+ ┣ Baseline_model.ipynb
+ ┣ Cat_Boost.ipynb
+ ┣ Light_GBM.ipynb
+ ┗  README.md
+```
