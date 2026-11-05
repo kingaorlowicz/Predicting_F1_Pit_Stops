@@ -54,7 +54,8 @@ An initial exploratory data analysis revealed key strategic and technical patter
   <img src="figures/corr_matrix.png" alt="Correlation Matrix">
 </figure>
 
-## Modeling: Baseline (LightGBM)
+## ML Modeling
+### Baseline (LightGBM)
 The first baseline model utilized a LightGBM Classifier (default hyperparameters). 
 The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, averaging Out-Of-Fold (OOF) probabilities. Feature importance evaluated via "Gain" confirmed the effectiveness of our engineered features, highlighting the dominant role of the year, stint number, and `Cliff_Indicator`. The baseline model achieved an OOF ROC AUC of ~0.915 and a public leaderboard score of ~0.918.
 
@@ -65,10 +66,10 @@ The pipeline was structured around a 5-fold Stratified K-Fold cross-validation, 
 </figure> 
 
 
-## LightGBM OptunaTuned Model
+### LightGBM OptunaTuned Model
  I used Optuna to tune LightGBM model. The optimized model achieved an improved score of 0.93026 on the public leaderboard.
 
- ## CatBoost OptunaTuned Model
+ ### CatBoost OptunaTuned Model
  As in LightGBM I used Optuna to optimize hyperparameters od Catboost. I used Google Colab GPU to train Catboost models. The model achived even better result on kaggle public leaderboard: 0.94817.
 
   Features importance:
