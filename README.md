@@ -87,6 +87,20 @@ Since LightGBM, CatBoost, and XGBoost build trees and process categorical featur
 * **Rank Blending:** To bypass the probability scaling issue, raw probabilities were converted into normalized ranks. A 3-Way Rank Blend was executed, heavily weighting the stronger models (50% CatBoost, 25% XGBoost, 25% LightGBM). This ensemble achieved 0.94541 on the leaderboard.
 * **Conclusion:** The 3-Way Rank Blend ultimately underperformed compared to the CatBoost model. This indicates that CatBoost's native categorical encoding  is vastly superior for this specific dataset.
 
+
+### CatBoost with Advanced Feature Engineering
+In an attempt to break the 0.95 ROC AUC barrier, a set of advanced, domain-specific features was engineered to capture actual F1 racing strategy rather than just raw telemetry. These included:
+- Grid Pressure: Comparing a driver's tire age to the average tire age of the rest of the grid on the same lap.
+- Compound Death (Normalized TyreLife Squared): Exponentially amplifying tire wear to simulate the cliff edge of tire performance. (Carefully mapped using only training set history to prevent data leakage/covariate shift).
+- Panic Indicator: An interaction feature combining sudden pace drops with position loss.
+- Rolling Features: 3-lap rolling averages for gap to fastest and lap time delta.
+
+Although Feature Importance analysis confirmed that the model highly valued these new strategic features (with TyreLife_vs_Grid breaking into the Top 5), the model achieved a score of 0.94714 on the public leaderboard.
+
+ <figure align="center">
+  <img src="figures/FI_adv_catboost.png" alt="Feature Importance (CatBoost)">
+</figure> 
+
 ## Results
 | Model | Kaggle Public LB ROC AUC |
 | :--- | :--- |
@@ -94,6 +108,7 @@ Since LightGBM, CatBoost, and XGBoost build trees and process categorical featur
 | **LightGBM (Tuned - Optuna)** | 0.93026 |
 | **XGBoost (Tuned - Optuna)** | 0.94085 |
 | **3-Way Rank Blend** | 0.94541 |
+| **CatBoost (Advanced Feature Engineering)** | 0.94714 |
 | **CatBoost (Tuned - Optuna)** | **0.94817** |
 
 
@@ -105,6 +120,7 @@ Predicting_F1_Pit_Stops
  ┣ Analysis_Feature_Eng.ipynb       # Datasets preparing and analysis
  ┣ Baseline_model.ipynb
  ┣ Cat_Boost.ipynb
+ ┣ Cat_Boost_FE.ipynb
  ┣ XGBoost.ipynb
  ┣ Light_GBM.ipynb
  ┗  README.md
