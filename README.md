@@ -101,12 +101,25 @@ Although Feature Importance analysis confirmed that the model highly valued thes
   <img src="figures/FI_adv_catboost.png" alt="Feature Importance (CatBoost)">
 </figure> 
 
+### Deep Learning: Tabular ResNet
+To capture complex non-linear relationships and geometric patterns that tree-based models might miss, a Deep Learning approach was introduced. I implemented a Tabular ResNet architecture using PyTorch.
+
+Key architectural decisions included:
+- Embeddings: Categorical features (Driver, Compound, Race, Year) were mapped into dense vector spaces.
+- Residual Blocks (Skip Connections): These blocks prevent the vanishing gradient problem and allow the network to retain raw original signals while learning complex residuals.
+- BCEWithLogitsLoss (Positional Weighting): Applied to handle the severe class imbalance of pit stops.
+
+The standalone Tabular ResNet achieved an AUC of 0.94090. While slightly lower than CatBoost (as is typical for tabular data), its predictions were highly uncorrelated with the tree models, making it a perfect candidate for advanced rank blending.
+
+
+
 ## Results
 | Model | Kaggle Public LB ROC AUC |
 | :--- | :--- |
 | **LightGBM (Baseline)** | 0.91827 |
 | **LightGBM (Tuned - Optuna)** | 0.93026 |
 | **XGBoost (Tuned - Optuna)** | 0.94085 |
+| **Tabular ResNet (PyTorch)** | 0.94090 |
 | **3-Way Rank Blend** | 0.94541 |
 | **CatBoost (Advanced Feature Engineering)** | 0.94714 |
 | **CatBoost (Tuned - Optuna)** | **0.94817** |
@@ -123,5 +136,6 @@ Predicting_F1_Pit_Stops
  ┣ Cat_Boost_FE.ipynb
  ┣ XGBoost.ipynb
  ┣ Light_GBM.ipynb
+ ┣ deeplearning_model               # Resnet
  ┗  README.md
 ```
